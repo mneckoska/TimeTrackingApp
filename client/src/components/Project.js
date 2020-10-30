@@ -1,34 +1,44 @@
 import React , {Component} from 'react';
-import projectServices from '../services/project.services';
+import Form from './Form';
+import Button from './Button';
+
 class Project extends Component
 {
        constructor(props)
        {    
            super(props);
            this.state= {
-            users:[]
+            projects:[],
+            isFormVisible : false
+                    
+       }
+       this.addProject=this.addProject.bind(this);
+      // this.viewFunction=this.viewFunction.bind(this); 
+      }                      
+      addProject()
+      {
 
-       }}
+      }   
 
-          componentDidMount()
-          {
+      componentDidMount()
+      {
             fetch('http://localhost:3000/projects')
             .then(response => response.json())
             .then(res => {
-                debugger;
               if(res) 
               { 
 
-                this.setState({users:[...this.state.users, ...res]})
+                this.setState({projects:[...this.state.projects, ...res]})
               }
             });
-          }     
-  
+      }
+          
+            
     render()
     {
     return(
         <div>
-        <p>List of projects</p>
+          <h2>List of projects</h2>
             <table>
                 <thead>
                     <tr>
@@ -39,19 +49,22 @@ class Project extends Component
                     </tr>                                      
                 </thead>
                 <tbody>
-                {this.state.users.map(( listValue, index ) => {
+                {this.state.projects.map(( listValue, index ) => {
                 return (
             <tr key={index}>
               <td>{listValue.id}</td>
               <td>{listValue.name}</td>
               <td>{listValue.description}</td>
+              <td><Button /></td>
             </tr>
+            
           );
         })}
             </tbody>
             </table>
-
-        
+        <p></p>
+        <button className="addButton" onClick={() => this.setState({ isFormVisible: true })}>Add project</button>
+        { this.state.isFormVisible ? <Form/> : null }
         </div>
     );
     }

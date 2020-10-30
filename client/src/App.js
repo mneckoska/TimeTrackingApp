@@ -1,63 +1,34 @@
 import './App.css';
 import React , {Component} from 'react';
 import Project from './components/Project';
+import ProjectDetails from './components/ProjectDetails';
+import {BrowserRouter, Route, Switch } from 'react-router-dom';
+import Navigation from './components/Navigation';
+import Button from './components/Button';
  
-class App extends Component {
+class App extends Component {  
 
- /* constructor(props)
-  {
-    super(props);
-    this.state= {
-      users:[]
-    }
-  }*/
+  render () {
 
-  constructor(props)
-  {
-    super(props);
+    return    (
+
     
-  }
 
-  /*componentDidMount()
-  {
-    fetch('http://localhost:3000/users')
-    .then(response => response.json())
-    .then(res => {
-      if(res && res.data) 
-      {
-        this.setState({users:[...this.state.users, ...res.data]})
-      }
-    });
-  }
-  
-  renderUsers()
-  {
-    if(this.state.users.length <=0)
-    {
-      return <div>Loading...</div>
-    }
+<BrowserRouter>
+    <div className="app">
+    <h1>Simple Time Tracking Application</h1>
+      <Navigation/>
+        <Switch>
+            <Route exact path='/' component={Project}></Route>
+            <Route exact path='/project' component={ProjectDetails}></Route>  
+            <Route exact path='/view'  component={Button}></Route>          
+        </Switch>
+        </div>
+    </BrowserRouter>    
 
-    else {
-      return this.state.users.map((val,key) => {
-        return <div key={key}>
-          {val.name} | {val.age}
-          <button>View</button>
-          <button>Update</button>
-          <button>Delete</button>
-          <Project />
-
-        </div>;
-      })
-    }
-  }
-  */
-
-  render() {
-  return (
-    <div className="App">
-      <Project/>
-    </div>
+    
   );
 }
 }
+
 export default App;

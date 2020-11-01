@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import {get, addTime} from "../services/ProjectService";
+import {get,addTime} from "../services/ProjectService";
 
 
 class ProjectDetails extends Component{
@@ -16,25 +16,25 @@ class ProjectDetails extends Component{
          timeDescription: '',
          timeHours: 0
         }
-        //this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }  
 
     componentDidMount()
     {
+      debugger;
       const url ='http://localhost:3000/projects/'+ this.props.history.location.id;
       get(url).then(
         (res) => {
           this.setState({project:res});
           let hours=0;
-          if(!!this.state.project.times)
-          {
-          this.state.project.times.map(x => {
-            
-          hours+=x.hours 
+          if(!!this.state.project.times){
+         this.state.project.times.map(x=>{
+          hours+=x.hours
          });
          this.setState({totalHours:hours});
-         }
-         }); 
+        }
+         });
+         
     }
     
     showHideAddHoursForm(){
@@ -43,7 +43,6 @@ class ProjectDetails extends Component{
 
     saveTime(){
       this.showHideAddHoursForm();
-      this.showHideAddHoursForm();
       
       const url ='http://localhost:3000/times';
       const model = {
@@ -51,7 +50,7 @@ class ProjectDetails extends Component{
         hours: parseInt(this.state.timeHours),
         projectId: this.state.project.id
       };
-     
+      debugger;
       addTime(url,model).then(
         (res) => {
           this.setState({project:res});
@@ -64,14 +63,23 @@ class ProjectDetails extends Component{
         }
         
          });
+      //da se napravi povik za da dodava time vo project 
+      //da se napravi da se dodava vo lista na times ili da se pravi pak povik do server za get project
     }
-
-    
 
     deleteTime(){
       //utre
     }
 
+    handleInputChange(event) {
+      const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+    }
 
     
     render()   
@@ -99,6 +107,12 @@ class ProjectDetails extends Component{
             </tbody>
 
             </table>
+            <button className="btnActions btn" onClick={() => this.showHideAddHoursForm()} >Add hours</button>
+                {this.state.displayAddTime && <div>
+                 Description <input name="timeDescription" value={this.state.timeDescription}  onChange={this.handleInputChange}></input>
+                 Hours <input type="numbers" name="timeHours" value={this.state.timeHours}  onChange={this.handleInputChange}></input>
+                 <button  onClick={() => this.saveTime()}>Save time</button>
+                  </div>}
             <h2>Times</h2>
             <table>
                 <thead>
@@ -107,12 +121,7 @@ class ProjectDetails extends Component{
                         <th>Hours</th>  </tr>                                      
                 </thead>
                 <tbody>
-                <button className="btnActions" onClick={() => this.showHideAddHoursForm()} >View</button>
-                {this.state.displayAddTime && <div>
-                 Description <input type="text"  value={this.state.timeDescription}></input>
-                 Hours <input type="text" value={this.state.timeHours}></input>
-                 <button  onClick={() => this.saveTime()}>Save time</button>
-                  </div>}
+                
                 {this.state.project.times.map((time,index) => {
                 return (
             <tr key={index}>

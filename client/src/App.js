@@ -4,7 +4,6 @@ import Project from './components/Project';
 import ProjectDetails from './components/ProjectDetails';
 import {BrowserRouter, Route, Switch } from 'react-router-dom';
 import Navigation from './components/Navigation';
-import Button from './components/Button';
 import FormComponent from './components/ProjectForm';
  
 class App extends Component {  
@@ -21,8 +20,7 @@ class App extends Component {
       <Navigation/>
         <Switch>
             <Route exact path='/' component={Project}></Route>
-            <Route exact path='/project' component={ProjectDetails}></Route>  
-            <Route exact path='/view'  component={Button}></Route>
+            <Route exact path='/project' component={ProjectDetails}></Route> 
             <Route exact path='/manage-projects'  component={FormComponent}></Route>          
         </Switch>
         </div>

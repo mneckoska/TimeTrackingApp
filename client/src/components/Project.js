@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import {get, deleteProject, addProject } from "../services/ProjectService";
+import {get, deleteProject } from "../services/ProjectService";
 
 class Project extends Component
 {
@@ -14,7 +14,7 @@ class Project extends Component
        this.addNewProject=this.addNewProject.bind(this);
        this.handleClick = this.handleClick.bind(this);
        this.getProjects=this.getProjects.bind(this);
-     //  this.getProjects();
+    
       }                      
       addNewProject()
       {
@@ -35,7 +35,6 @@ class Project extends Component
       }
 
       deleteProject1(item){
-        debugger;
         const url ='http://localhost:3000/projects/'+ item.id;
         deleteProject(url).then(
           (res) => {  
@@ -56,8 +55,7 @@ class Project extends Component
       }
 
       toggleModal = () => {
-        debugger;
-        this.setState({
+          this.setState({
           isFormVisible: !this.state.isFormVisible
         });
       }   

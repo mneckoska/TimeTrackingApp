@@ -1,6 +1,5 @@
 import React , {Component} from 'react';
-import Form from './Form';
-import Button from './Button';
+import {get, deleteProject, addProject } from "../services/ProjectService";
 
 class Project extends Component
 {
@@ -12,32 +11,62 @@ class Project extends Component
             isFormVisible : false
                     
        }
-       this.addProject=this.addProject.bind(this);
-      // this.viewFunction=this.viewFunction.bind(this); 
+       this.addNewProject=this.addNewProject.bind(this);
+       this.handleClick = this.handleClick.bind(this);
+       this.getProjects=this.getProjects.bind(this);
+     //  this.getProjects();
       }                      
-      addProject()
+      addNewProject()
       {
+        this.props.history.push({pathname: '/manage-projects'      
+      });     
+      }
 
-      }   
+      handleClick(item) {       
+       this.props.history.push({pathname: '/project',
+        id: item.id,
+      });     
+      }
+
+      updateProject(item){       
+        this.props.history.push({pathname: '/manage-projects',
+        project: item,
+      });     
+      }
+
+      deleteProject1(item){
+        debugger;
+        const url ='http://localhost:3000/projects/'+ item.id;
+        deleteProject(url).then(
+          (res) => {  
+            this.setState({projects:[...this.state.projects, ...res]})
+           });
+      }
 
       componentDidMount()
       {
-            fetch('http://localhost:3000/projects')
-            .then(response => response.json())
-            .then(res => {
-              if(res) 
-              { 
-
-                this.setState({projects:[...this.state.projects, ...res]})
-              }
-            });
+        get("http://localhost:3000/projects").then(
+          (res) => {
+          this.setState({projects:[...this.state.projects, ...res]})
+           });
       }
-          
+
+      getProjects(){
+        
+      }
+
+      toggleModal = () => {
+        debugger;
+        this.setState({
+          isFormVisible: !this.state.isFormVisible
+        });
+      }   
             
     render()
     {
     return(
         <div>
+         
           <h2>List of projects</h2>
             <table>
                 <thead>
@@ -46,6 +75,8 @@ class Project extends Component
                         <th>Project Name</th>
                         <th>Description</th>
                         <th>Actions</th>
+                        <th></th>
+                        <th></th>
                     </tr>                                      
                 </thead>
                 <tbody>
@@ -55,7 +86,9 @@ class Project extends Component
               <td>{listValue.id}</td>
               <td>{listValue.name}</td>
               <td>{listValue.description}</td>
-              <td><Button /></td>
+              <td><button className="btnActions" onClick={() => this.handleClick(listValue)} >View</button></td>
+              <td><button className="btnActions" onClick={() => this.updateProject(listValue)} >Update</button></td>
+              <td><button className="btnActions" onClick={() => this.deleteProject1(listValue)} >Delete</button></td>
             </tr>
             
           );
@@ -63,8 +96,9 @@ class Project extends Component
             </tbody>
             </table>
         <p></p>
-        <button className="addButton" onClick={() => this.setState({ isFormVisible: true })}>Add project</button>
-        { this.state.isFormVisible ? <Form/> : null }
+       
+        <button className="addButton" onClick={() => this.addNewProject()}>Add project</button>
+    
         </div>
     );
     }

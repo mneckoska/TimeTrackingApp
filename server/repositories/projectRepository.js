@@ -6,13 +6,13 @@ const generateId = () => id++;
 
 let PROJECTS = [
     new Project(generateId(), "project 1" ,"opis1",[
-        new Time(generateId(), "time1"),
-        new Time(generateId(), "time2"),
-        new Time(generateId(),"time 3...")
+        new Time(generateId(), "time1",1),
+        new Time(generateId(), "time2",2),
+        new Time(generateId(),"time 3",3)
     ]),
 
     new Project(generateId(), "project2", "opis2", [
-        new Time(generateId(),"time 4")
+        new Time(generateId(),"time 4", 4)
     ])
 ];
 
@@ -25,7 +25,7 @@ const findById = (projectId) => {
 }
 
 const create = (project) => {
-    const newProject = new Project(generateId(), project.name);
+    const newProject = new Project(generateId(), project.name, project.description, []);
     PROJECTS.push(newProject);
     return newProject;
 }
@@ -50,10 +50,19 @@ const deleteProject = (projectId) =>
     PROJECTS=PROJECTS.filter((project)=> project.id === projectId);
 }
 
+const createTimeForProject = (time) => {
+    const project = PROJECTS.find(x=>x.id == time.projectId);
+    if(!!project){
+        project.times.push(new Time(generateId(),time.description,time.hours));
+    }
+  return project;
+}
+
 module.exports = {
     findAll,
     findById,
     create,
     update,
-    deleteProject
+    deleteProject,
+    createTimeForProject
 }

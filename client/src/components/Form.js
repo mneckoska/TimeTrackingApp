@@ -11,6 +11,13 @@ function handleChange(e)
     console.log(e.target.value);
 }
 
+//da se napravi f-ja za textarea handleChange
+/*function textareaChange(e)
+{
+    setName(e.target.value)
+    console.log(e.target.value);
+}*/
+
 function handleSubmit(e)
 {
     e.preventDefault();
@@ -39,7 +46,7 @@ return (
           id="new-description"
           name="description"
           autoComplete="off"
-          onChange={handleChange}     
+          value={name}
         >
         </textarea>
         <p>Time</p>

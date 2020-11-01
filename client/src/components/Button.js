@@ -7,18 +7,19 @@ import {
     Switch,
     useParams
   } from 'react-router-dom'
+import ProjectDetails from './ProjectDetails';
 
 
 export default function Button(props)
 {
 
-    const [formVisibility,setFormVisibility]= useState(false);
-   
-    
+  const [formVisibility, setFormVisibility] = useState(false);
+     
     const {id} = useParams();
       const history = useHistory();
-      function viewProject()
+      function viewProject(props)
       {
+        debugger;
           history.push('/project');          
 
       }   
@@ -30,8 +31,8 @@ export default function Button(props)
     return(
 
         <td><button className="btnActions" onClick={viewProject}>View</button>
-              <button onClick={() => this.setFormVisibility({ formVisibility: true })}>Update</button>
-              { this.setFormVisibility.formVisibility ? <Form/> : null }
+              <button onClick={() => setFormVisibility({ formVisibility: true })}>Update</button>
+              {formVisibility ? <Form/> : null }              
               <button>Delete</button></td>
     )
 }

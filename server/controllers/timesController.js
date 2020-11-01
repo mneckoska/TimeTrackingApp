@@ -7,6 +7,14 @@ const findAll = (req,res) =>
     res.json(project.times);
 };
 
+const createNewTime=(req,res) =>
+{
+    const newTime = projectRepository.createTimeForProject(req.body);
+    res.json(newTime);
+    res.status(200);
+}
+
 module.exports = {
-    findAll
+    findAll,
+    createNewTime
 };

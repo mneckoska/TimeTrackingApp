@@ -10,7 +10,7 @@ router.get("/:projectId", projectController.findById);
 
 router.post("/",projectController.create);
 
-router.put("/:projectId",projectController.update);
+router.put("/",projectController.update);
 
 router.delete("/:projectId", projectController.deleteProject);
 

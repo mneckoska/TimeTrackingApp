@@ -1,5 +1,6 @@
 import { Component } from 'react';
-import React from 'react-dom';
+import {get, addTime} from "../services/ProjectService";
+
 
 class ProjectDetails extends Component{
 
@@ -7,25 +8,71 @@ class ProjectDetails extends Component{
     {    
         super(props);
         this.state= {
-         projects:[]
+         project:{
+           times:[]
+         },
+         totalHours: 0,
+         displayAddTime: false,
+         timeDescription: '',
+         timeHours: 0
         }
+        //this.handleInputChange = this.handleInputChange.bind(this);
     }  
-    
+
     componentDidMount()
     {
-        fetch('http://localhost:3000/projects/id',
-        {
-          mode: 'no-cors',
-        })
-         .then(response => response.json())
-         .then(res => {
-        if(res) 
-        { 
+      const url ='http://localhost:3000/projects/'+ this.props.history.location.id;
+      get(url).then(
+        (res) => {
+          this.setState({project:res});
+          let hours=0;
+          if(!!this.state.project.times)
+          {
+          this.state.project.times.map(x => {
+            
+          hours+=x.hours 
+         });
+         this.setState({totalHours:hours});
+         }
+         }); 
+    }
+    
+    showHideAddHoursForm(){
+      this.setState({displayAddTime: !this.state.displayAddTime});
+    }
 
-          this.setState({projects:[this.state.projects,res]})
+    saveTime(){
+      this.showHideAddHoursForm();
+      this.showHideAddHoursForm();
+      
+      const url ='http://localhost:3000/times';
+      const model = {
+        description: this.state.timeDescription,
+        hours: parseInt(this.state.timeHours),
+        projectId: this.state.project.id
+      };
+     
+      addTime(url,model).then(
+        (res) => {
+          this.setState({project:res});
+          let hours=0;
+          if(!!this.state.project.times){
+         this.state.project.times.map(x=>{
+          hours+= parseInt(x.hours)
+         });
+         this.setState({totalHours:hours});
         }
-      });
-    }    
+        
+         });
+    }
+
+    
+
+    deleteTime(){
+      //utre
+    }
+
+
     
     render()   
     {
@@ -42,15 +89,36 @@ class ProjectDetails extends Component{
                         <th>Hours</th>
                     </tr>                                      
                 </thead>
+                <tbody>                
+            <tr>
+            <td></td>
+              <td>{this.state.project.name}</td>
+              <td>{this.state.project.description}</td>   
+              <td>{this.state.totalHours}</td>            
+            </tr>
+            </tbody>
+
+            </table>
+            <h2>Times</h2>
+            <table>
+                <thead>
+                    <tr>                        
+                        <th>Description</th>   
+                        <th>Hours</th>  </tr>                                      
+                </thead>
                 <tbody>
-                {this.state.projects.map(( listValue,index) => {
+                <button className="btnActions" onClick={() => this.showHideAddHoursForm()} >View</button>
+                {this.state.displayAddTime && <div>
+                 Description <input type="text"  value={this.state.timeDescription}></input>
+                 Hours <input type="text" value={this.state.timeHours}></input>
+                 <button  onClick={() => this.saveTime()}>Save time</button>
+                  </div>}
+                {this.state.project.times.map((time,index) => {
                 return (
             <tr key={index}>
-              <td>{listValue.name}</td>
-              <td>{listValue.description}</td>
-              
+              <td>{time.description}</td>
+              <td>{time.hours}</td>
             </tr>
-            
           );
         })}
             </tbody>

@@ -27,7 +27,8 @@ const update = (req,res) => {
 const deleteProject = (req,res) =>
 {
     const projectId = Number(req.params.projectId);
-    projectRepository.deleteProject(projectId);
+    const projects = projectRepository.deleteProject(projectId);
+    res.json(projects);
     res.status(200);
 }
 

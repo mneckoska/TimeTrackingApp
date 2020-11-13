@@ -1,6 +1,6 @@
 class Time {
 
-    constructor(id,description, hours)
+    constructor(id, description, hours)
     {
         this.id=id;
         this.description=description;

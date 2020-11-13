@@ -8,7 +8,7 @@ let PROJECTS = [
     new Project(generateId(), "project 1" ,"opis1",[
         new Time(generateId(), "time1",1),
         new Time(generateId(), "time2",2),
-        new Time(generateId(),"time 3",3)
+        new Time(generateId(), "time3",3)
     ]),
 
     new Project(generateId(), "project2", "opis2", [
@@ -46,16 +46,24 @@ const update = (updatedProject) =>
 
 const deleteProject = (projectId) =>
 {
-
-    PROJECTS=PROJECTS.filter((project)=> project.id === projectId);
+    return PROJECTS = PROJECTS.filter((project)=> project.id != projectId);
+      
 }
 
 const createTimeForProject = (time) => {
-    const project = PROJECTS.find(x=>x.id == time.projectId);
-    if(!!project){
+    const project = PROJECTS.find(x => x.id == time.projectId);
+    if(!!project)   
+    {
         project.times.push(new Time(generateId(),time.description,time.hours));
     }
   return project;
+}
+
+const deleteTimeForProject = (timeId, projectId) => {
+    const project = PROJECTS.find(project => project.id == projectId);
+    if (project) {
+        return project.times.filter(timeInList => timeInList.id != timeId);
+    }
 }
 
 module.exports = {
@@ -64,5 +72,6 @@ module.exports = {
     create,
     update,
     deleteProject,
-    createTimeForProject
+    createTimeForProject,
+    deleteTimeForProject
 }

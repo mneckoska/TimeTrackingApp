@@ -26,8 +26,9 @@ class ProjectDetails extends Component{
         (res) => {
           this.setState({project:res});
           let hours=0;
-          if(!!this.state.project.times){
-         this.state.project.times.map(x=>{
+          if(!!this.state.project.times)
+          {
+          this.state.project.times.map(x => {
           hours+=x.hours
          });
          this.setState({totalHours:hours});
@@ -69,7 +70,7 @@ class ProjectDetails extends Component{
     }
 
     handleInputChange(event) {
-      const target = event.target;
+    const target = event.target;
     const value = target.value;
     const name = target.name;
 
@@ -95,14 +96,13 @@ class ProjectDetails extends Component{
                     </tr>                                      
                 </thead>
                 <tbody>                
-            <tr>
-            <td></td>
-              <td>{this.state.project.name}</td>
-              <td>{this.state.project.description}</td>   
-              <td>{this.state.totalHours}</td>            
-            </tr>
-            </tbody>
-
+                  <tr>
+                    <td></td>
+                    <td>{this.state.project.name}</td>
+                    <td>{this.state.project.description}</td>   
+                    <td>{this.state.totalHours}</td>            
+                  </tr>
+                </tbody>
             </table>
             <button className="addButton btn" onClick={() => this.showHideAddHoursForm()} >Add hours</button>
                 {this.state.displayAddTime && <div>
@@ -115,18 +115,21 @@ class ProjectDetails extends Component{
                 <thead>
                     <tr>                        
                         <th>Description</th>   
-                        <th>Hours</th>  </tr>                                      
+                        <th>Hours</th>  
+                        <th>Action</th>
+                    </tr>                                      
                 </thead>
                 <tbody>
                 
                 {this.state.project.times.map((time,index) => {
-                return (
-            <tr key={index}>
-              <td>{time.description}</td>
-              <td>{time.hours}</td>
-            </tr>
-          );
-        })}
+                  return (
+                    <tr key={index}>
+                      <td>{time.description}</td>
+                      <td>{time.hours}</td>
+                      <td><button onClick={() => this.deleteTime(time.id)}>Delete</button></td>
+                    </tr>
+                  );
+                })}
             </tbody>
             </table>
             </div>

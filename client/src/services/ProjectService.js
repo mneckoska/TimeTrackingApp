@@ -25,21 +25,20 @@ export const updateProject = (url, project) => {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(project)
-  }).then((response) => response.json());
+    }).then((response) => response.json());
 };
 
 export const deleteProject = (url) => {
   return fetch(url, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }).then((response) => response.json());
+    method: "DELETE"   
+  }).then((res) => (
+    res.json())
+  );
 };
 
 export const addTime = (url, time) => {
   return fetch(url, {
-    method: "POST", //
+    method: "POST",
     headers: {
       "Content-Type": "application/json"
     },    

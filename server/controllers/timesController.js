@@ -14,7 +14,13 @@ const createNewTime=(req,res) =>
     res.status(200);
 }
 
+const deleteTime = (req, res) => {
+    const times = projectRepository.deleteTimeForProject(req.params.timeId, req.params.projectId);
+    res.json(times);
+}
+
 module.exports = {
     findAll,
-    createNewTime
+    createNewTime,
+    deleteTime
 };

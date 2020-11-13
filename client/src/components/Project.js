@@ -13,7 +13,7 @@ class Project extends Component
        }
        this.addNewProject=this.addNewProject.bind(this);
        this.handleClick = this.handleClick.bind(this);
-       this.getProjects=this.getProjects.bind(this);
+       this.deleteProject1=this.deleteProject1.bind(this);
     
       }                      
       addNewProject()
@@ -33,15 +33,16 @@ class Project extends Component
         project: item,
       });     
       }
-
-      deleteProject1(item){
+      
+     
+      deleteProject1(item)
+      {
         const url ='http://localhost:3000/projects/'+ item.id;
-        deleteProject(url).then(
-          (res) => {  
-            this.setState({projects:[...this.state.projects, ...res]})
-           });
+        deleteProject(url).then((remainingProjects) => {
+          this.setState({projects: remainingProjects})
+        });  
       }
-
+  
       componentDidMount()
       {
         get("http://localhost:3000/projects").then(
@@ -50,11 +51,7 @@ class Project extends Component
            });
       }
 
-      getProjects(){
-        
-      }
-
-      toggleModal = () => {
+        toggleModal = () => {
           this.setState({
           isFormVisible: !this.state.isFormVisible
         });

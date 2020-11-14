@@ -10,8 +10,6 @@ let PROJECTS = [
         new Time(generateId(), "time2",2),
         new Time(generateId(), "time3",3)
     ]),
-
-    
     new Project(generateId(), "project2", "opis2", [
         new Time(generateId(),"time 4", 4)
     ])

@@ -60,7 +60,9 @@ const createTimeForProject = (time) => {
 const deleteTimeForProject = (timeId, projectId) => {
   const project = PROJECTS.find((project) => project.id == projectId);
   if (project) {
-    const newTimes = project.times.filter((timeInList) => timeInList.id != timeId);
+    const newTimes = project.times.filter(
+      (timeInList) => timeInList.id != timeId
+    );
     project.times = newTimes;
     return newTimes;
   }

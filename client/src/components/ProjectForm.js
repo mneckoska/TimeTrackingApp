@@ -4,10 +4,9 @@ import { addProject, updateProject } from "../services/ProjectService";
 export default class FormComponent extends React.Component {
   constructor(props) {
     super(props);
-    const project = this.props.history.location.project ||
-     {
+    const project = this.props.history.location.project || {
       name: "",
-      description: ""
+      description: "",
     };
     this.state = project;
 
@@ -21,7 +20,7 @@ export default class FormComponent extends React.Component {
     const name = target.name;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -29,18 +28,14 @@ export default class FormComponent extends React.Component {
     event.preventDefault();
     if (!this.state.id) {
       console.log("Create new project...", this.state);
-      addProject("http://localhost:3000/projects", this.state).then(
-        () => {        
-          this.props.history.push({pathname: '/' });     
-        }
-      );
+      addProject("http://localhost:3000/projects", this.state).then(() => {
+        this.props.history.push({ pathname: "/" });
+      });
     } else {
       console.log("Update existing project", this.state);
-      updateProject("http://localhost:3000/projects", this.state).then(
-        () => {
-          this.props.history.push({pathname: '/'});     
-        }
-      );
+      updateProject("http://localhost:3000/projects", this.state).then(() => {
+        this.props.history.push({ pathname: "/" });
+      });
     }
   }
 

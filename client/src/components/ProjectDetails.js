@@ -17,7 +17,8 @@ class ProjectDetails extends Component {
   }
 
   fetchProject = () => {
-    const url = "http://localhost:3000/projects/" + this.props.history.location.id;
+    const url =
+      "http://localhost:3000/projects/" + this.props.history.location.id;
     get(url).then((res) => {
       this.setState({ project: res });
       let hours = 0;
@@ -28,7 +29,7 @@ class ProjectDetails extends Component {
         this.setState({ totalHours: hours });
       }
     });
-  }
+  };
 
   componentDidMount() {
     this.fetchProject();
@@ -55,8 +56,8 @@ class ProjectDetails extends Component {
           hours += parseInt(x.hours);
         });
         this.setState({ totalHours: hours });
-        this.setState({ timeDescription: ""});
-        this.setState({ timeHours: 0});
+        this.setState({ timeDescription: "" });
+        this.setState({ timeHours: 0 });
       }
     });
   }
@@ -64,9 +65,13 @@ class ProjectDetails extends Component {
   deleteTime(timeId) {
     const projectId = this.state.project.id;
     const url = `http://localhost:3000/projects/${projectId}/times/${timeId}`;
-    deleteTimeById(url).then((newTimes) => {
-      this.setState(prevState => ({project: {...prevState.project, times: newTimes}}));
-    }).then(this.fetchProject());
+    deleteTimeById(url)
+      .then((newTimes) => {
+        this.setState((prevState) => ({
+          project: { ...prevState.project, times: newTimes },
+        }));
+      })
+      .then(this.fetchProject());
   }
 
   handleInputChange(event) {
@@ -142,7 +147,11 @@ class ProjectDetails extends Component {
                 <tr key={index}>
                   <td>{time.description}</td>
                   <td>{time.hours}</td>
-                  <td><button onClick={() => this.deleteTime(time.id)}>Delete</button></td>
+                  <td>
+                    <button onClick={() => this.deleteTime(time.id)}>
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               );
             })}

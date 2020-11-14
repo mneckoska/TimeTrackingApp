@@ -50,15 +50,19 @@ class ProjectDetails extends Component {
     };
     addTime(url, model).then((res) => {
       this.setState({ project: res });
-      let hours = 0;
-      if (!!this.state.project.times) {
-        this.state.project.times.map((x) => {
-          hours += parseInt(x.hours);
-        });
-        this.setState({ totalHours: hours });
-        this.setState({ timeDescription: "" });
-        this.setState({ timeHours: 0 });
-      }
+      // let hours = 0;
+      // if (!!this.state.project.times) {
+      //   this.state.project.times.map((x) => {
+      //     hours += parseInt(x.hours);
+      //   });
+    //     this.setState({ totalHours: hours });
+    //     this.setState({ timeDescription: "" });
+    //     this.setState({ timeHours: 0 });
+    //   }
+    // });
+      this.fetchProject();
+      this.setState({ timeDescription: "" });
+      this.setState({ timeHours: 0 });
     });
   }
 

@@ -45,3 +45,9 @@ export const addTime = (url, time) => {
     body: JSON.stringify(time)
   }).then((response) => response.json());
 };
+
+export const deleteTimeById = (url) => {  
+  return fetch(url, {
+    method: "DELETE"
+  }).then(response => response.json());
+}
